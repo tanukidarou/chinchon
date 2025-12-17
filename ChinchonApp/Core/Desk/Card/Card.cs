@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChinchonApp.Core.Desk
+namespace ChinchonApp.Core.Desk.Card
 {
-    abstract class Card
+    public abstract class Card
     {
         public CardType CardType { get; internal set; }
     }

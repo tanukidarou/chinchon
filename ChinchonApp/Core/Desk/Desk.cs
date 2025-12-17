@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using ChinchonApp.Core.Desk;
+using ChinchonApp.Core.Desk.Card;
 using System.Collections.Generic;
 
 abstract class Desk
@@ -83,10 +83,11 @@ class PlayeableDesk : Desk
             cards.Add(new NormalCard(CardType.Basto, i));
         }
 
-        for (int i = 1; i <= 2; i++)
+        // Se removio temporalemente por la difultad extra de desarrollo
+        /*for (int i = 1; i <= 2; i++)
         {
             cards.Add(new JokerCard());
-        }
+        }*/
     }
 }
 

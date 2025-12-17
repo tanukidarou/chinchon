@@ -1,4 +1,4 @@
-﻿using ChinchonApp.Core.Desk;
+﻿using ChinchonApp.Core.Desk.Card;
 using ChinchonApp.GUI;
 using System;
 
@@ -50,14 +50,25 @@ while (true)
             break;
 
         // CONDICION DE SALIDA FALOPA - COMODIN
-        foreach (var player in players)
+        /*foreach (var player in players)
         {
             if (player.hand.HaveAJoker())
             {
                 winnerPlayer = player.PlayerNumer;
                 break;
             }
-        }
+        }*/
+
+        // CONDICION DE VICTORIA
+       foreach (var player in players)
+       {
+           if (player.hand.HaveAJoker())
+           {
+               winnerPlayer = player.PlayerNumer;
+               break;
+           }
+       }
+
 
         if (winnerPlayer != 0)
             break;
@@ -70,13 +81,16 @@ while (true)
             if (playeableDesk.IsEmpty())
                 break;
 
+            Console.WriteLine($"Player: {player.PlayerNumer}");
+
             var cardFromDesk = playeableDesk.RemoveTopCard();
             player.hand.AddCard(cardFromDesk);
 
-            Card removedCardFromHand = player.hand.RemoveTopCard();
-            discardDesk.AddCardToTopCard(removedCardFromHand);
+            // Selecciona una carta
+            Card selectedCard = GUI.SelectCardFromHand(player.hand, "Seleccione una carta para descartar:");
+            discardDesk.AddCardToTopCard(selectedCard);
 
-            Console.WriteLine($"El jugador {player.PlayerNumer} aggarro el {GUI.ShowCard(cardFromDesk)} y descarto el {GUI.ShowCard(removedCardFromHand)}");
+            Console.WriteLine($"El jugador {player.PlayerNumer} aggarro el {GUI.ShowCard(cardFromDesk)} y descarto el {GUI.ShowCard(selectedCard)}");
         }
 
 

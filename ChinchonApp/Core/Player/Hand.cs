@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using ChinchonApp.Core.Desk;
+﻿using ChinchonApp.Core.Desk.Card;
 
 class Hand
 {
@@ -9,6 +7,16 @@ class Hand
     public void AddCard(Card card)
     {
         cards.Add(card);
+    }
+
+    internal List<Card> GetHandCards()
+    {
+        return cards;
+    }
+
+    internal Card GetCardAt(int index)
+    {
+        return cards[index];
     }
 
     /*public void RemoveCard(Card card)
@@ -46,11 +54,6 @@ class Hand
         return card;
     }
 
-    internal List<Card> GetHandCards()
-    {
-        return cards;
-    }
-
     internal bool HaveAJoker()
     {
         foreach (var card in cards)
@@ -71,4 +74,6 @@ class Hand
     {
         return cards.Count == 0;
     }
+
+    
 }

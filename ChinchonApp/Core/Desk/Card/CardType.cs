@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-enum CardType
+public enum CardType
 {
     Joker = 0,
     Oro,
