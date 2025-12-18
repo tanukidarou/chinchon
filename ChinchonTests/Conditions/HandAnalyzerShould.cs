@@ -3,14 +3,14 @@ using ChinchonApp.Core.Desk.Card;
 
 namespace ChinchonTests.Conditions
 {
-    public class Tests
+    public class HandAnalyzerShould
     {
-        private WinConditions winConditions;
+        private HandAnalyzer winConditions;
 
         [SetUp]
         public void Setup()
         {
-            winConditions = new WinConditions();
+            winConditions = new HandAnalyzer();
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace ChinchonTests.Conditions
             winhand.Add(new NormalCard(CardType.Espada, 1));
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfDiferentTypeButSameNumber(winhand);
 
             // There
             Assert.IsTrue(result);
@@ -40,7 +40,7 @@ namespace ChinchonTests.Conditions
             winhand.Add(new NormalCard(CardType.Basto, 1));
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfDiferentTypeButSameNumber(winhand);
 
             // There
 
@@ -56,7 +56,7 @@ namespace ChinchonTests.Conditions
             winhand.Add(new NormalCard(CardType.Copa, 1));
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfDiferentTypeButSameNumber(winhand);
 
             // There
 
@@ -74,14 +74,14 @@ namespace ChinchonTests.Conditions
             winhand.Add(new NormalCard(CardType.Espada, 7));
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfDiferentTypeButSameNumber(winhand);
 
             // There
             Assert.IsTrue(result);
         }
 
         [Test]
-        public void Test()
+        public void WinWithOnlyThreeCardsOfDiferentTypeAndConsecutiveNumber()
         {
             // Given
             var winhand = new List<Card>();
@@ -91,14 +91,14 @@ namespace ChinchonTests.Conditions
 
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfSameTypeButDiferentNumberInConsecutive(winhand);
 
             // There
             Assert.IsTrue(result);
         }
 
         [Test]
-        public void Test2()
+        public void AnotherWinWithOnlyThreeCardsOfDiferentTypeAndConsecutiveNumber()
         {
             // Given
             var winhand = new List<Card>();
@@ -108,14 +108,14 @@ namespace ChinchonTests.Conditions
 
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfSameTypeButDiferentNumberInConsecutive(winhand);
 
             // There
             Assert.IsTrue(result);
         }
 
         [Test]
-        public void Test3()
+        public void WinWithOnlyThreeCardsOfDiferentTypeAndConsecutiveNumberWithAnotherCards()
         {
             // Given
             var winhand = new List<Card>();
@@ -126,7 +126,7 @@ namespace ChinchonTests.Conditions
 
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfSameTypeButDiferentNumberInConsecutive(winhand);
 
             // There
             Assert.IsTrue(result);
@@ -134,7 +134,7 @@ namespace ChinchonTests.Conditions
 
 
         [Test]
-        public void Test31()
+        public void WinWithPairOfThreeCardsOfDiferentTypeAndConsecutiveNumberAndAnotherCards()
         {
             // Given
             var winhand = new List<Card>();
@@ -148,14 +148,14 @@ namespace ChinchonTests.Conditions
             winhand.Add(new NormalCard(CardType.Basto, 12));
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfSameTypeButDiferentNumberInConsecutive(winhand);
 
             // There
             Assert.IsTrue(result);
         }
 
         [Test]
-        public void Test4()
+        public void LoseWithOnlyTwoCardsOfDiferentTypeAndConsecutiveNumber()
         {
             // Given
             var winhand = new List<Card>();
@@ -165,7 +165,7 @@ namespace ChinchonTests.Conditions
 
 
             // When
-            var result = winConditions.IsValidWinHand(winhand);
+            var result = winConditions.HaveCardsOfSameTypeButDiferentNumberInConsecutive(winhand);
 
             // There
             Assert.IsFalse(result);

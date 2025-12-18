@@ -15,72 +15,26 @@ namespace ChinchonApp.Core.Conditions
         // + La combinacion no puede repetir cartas. La que se usa para uno queda en ese.
         // + Lo que no se usa se debe contar como sobrante
         // + El sobrante no puede ser mayor a un determinaod numero.
+        public HandAnalyzer handAnalyzer;
 
-        private const int MIN_CARDS_FOR_PAREJA = 3;
+        private const int MIN_NUMBER_OF_CARDS_IN_HAND = 7;
 
-        public bool IsValidWinHand(List<Card> cards)
+        public WinConditions(HandAnalyzer handAnalyzer)
         {
-            return HaveThreeCardsOfDiferentTypebutSameNumber(cards) || 
-                HaveThreeCardsOfSameTypeButDiferentNumberInConsecutive(cards);
+            this.handAnalyzer = handAnalyzer;
         }
 
-        private bool HaveThreeCardsOfDiferentTypebutSameNumber(List<Card> cards)
+        public bool IsWinHand(List<Card> cards)
         {
-            var normalCards = cards.Where(c => c is NormalCard);
-
-            Dictionary <int, int> count = new Dictionary<int, int>() { };
+            if(cards.Count < MIN_NUMBER_OF_CARDS_IN_HAND)
+                return false;
             
-            foreach (NormalCard card in normalCards)
-            {
-                if (count.ContainsKey(card.Number) == false)
-                    count.Add(card.Number, 1);
-                else
-                    count[card.Number] = ++count[card.Number];
-            }
+            var value_1 = handAnalyzer.HaveCardsOfDiferentTypeButSameNumber(cards);
 
-            return count.Any(vk => vk.Value >= MIN_CARDS_FOR_PAREJA);
+            var value_2 = handAnalyzer.HaveCardsOfSameTypeButDiferentNumberInConsecutive(cards);
+
+            return value_1 || value_2;
         }
 
-        private bool HaveThreeCardsOfSameTypeButDiferentNumberInConsecutive(List<Card> cards)
-        {
-            var normalCards = cards.Where(c => c is NormalCard);
-
-            var listofTypes = new Dictionary<CardType, Dictionary<int, int>>();
-
-            foreach (NormalCard card in normalCards)
-            {
-                if(listofTypes.ContainsKey(card.CardType) == false)
-                {
-                    listofTypes.Add(card.CardType, new Dictionary<int, int>() { { card.Number, 1 } });
-                    continue;
-                }
-
-                if (listofTypes[card.CardType].ContainsKey(card.Number) == false)
-                {
-                    listofTypes[card.CardType].Add(card.Number, 1);
-                    continue;
-                }
-
-                listofTypes[card.CardType][card.Number] = ++listofTypes[card.CardType][card.Number]; // esto nunca va a ocurrir
-            }
-
-            foreach (var list in listofTypes.Values)
-            {
-                var cardsArray = list.Keys.ToArray();
-                var maxLength = cardsArray.Length - (MIN_CARDS_FOR_PAREJA - 1);
-
-                for (int i = 0; i < maxLength; i++)
-                {
-                    var value_1 = cardsArray[i];
-                    var value_2 = cardsArray[i + 1] - 1;
-                    var value_3 = cardsArray[i + 2] - 2;
-
-                    if (value_1 == value_2 && value_1 == value_3)
-                        return true;
-                }
-            }
-
-            return false;
-        }
     }
 }
